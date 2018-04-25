@@ -15,16 +15,26 @@
 
 using namespace std;
 
+//bisogna definre la funzione Req
 
 int main(int argc, char** argv){
 
 //controllo che sia stato inserito il parametro
-    if (argc < 2){
+    if (argc < 3){
         cout << "metti il nome" <<endl;
         return 1;
     }
 
     TGraphErrors* myGraph = new TGraphErrors(argv[1]);
+
+    //DEFINISCO LA MIA FUNZIONE
+    TF1 *Req = new TF1("Req", Requiv, 0, 45e-6, 2);
+    Req->SetParameter(0, 1.06679e+07);
+    Req->SetParameter(1, 67957.87);
+
+    Req->SetParName(0,"Rv");
+    Req->SetParName(1,"R");
+
 
     //INIZIO ANALISI DEI DATI
 

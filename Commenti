@@ -1,0 +1,20 @@
+linearft.cpp
+fa linear fit
+
+richiede in argomento
+file con i dati in Input
+nome del file per l'output
+
+INPUT
+file di 4 colonne:
+x y dx dy
+
+OUTPUT
+nell'output dà 
+- coefficiente angolare della retta
+- Chi quadro non ridotto
+
+cose da fare:
+i dati sulla resistenza 1 sono da buttare
+
+della resistenza 2 ho 

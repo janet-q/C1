@@ -1,0 +1,2 @@
+La Resistenza misurata è: -0.000359054
+Il Chi quadro è: 0.0151453

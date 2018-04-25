@@ -1,0 +1,1 @@
+La resistenza del Voltmetro è Rv = 1.06679e+07

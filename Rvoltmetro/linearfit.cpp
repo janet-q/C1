@@ -37,9 +37,9 @@ int main(int argc, char** argv){
     myGraph->SetMarkerSize(1);
 
     //DEFINISCO LA MIA FUNZIONE
-    TF1* Req = new TF1("Req", Requivalente, 0, 50e-5, 2);
+    TF1* Req = new TF1("Req", Requivalente, 0, 0.09, 2);
     Req->SetParameter(0, 1.06679e+07);
-    Req->SetParameter(1, 67957.87);
+    Req->SetParameter(1, 33);
 
     Req->SetParName(0,"Rv");
     Req->SetParName(1,"R");
@@ -66,12 +66,9 @@ int main(int argc, char** argv){
 
 
     //risultati del fit
-
-    //TF1 *fit = myGraph->GetFunction("pol1");
-
     std::string fileOutput = argv[2];
     std::ofstream OutFile (fileOutput.c_str());
-    OutFile << Req->GetParameter(0) << "\t" << Req->GetParError(0);
+    OutFile << "La Resistenza del Voltemtro è Rv = " << Req->GetParameter(0) <<" +- " << Req->GetParError(0)<< endl;;
     OutFile.close();
 
    // myAPP->Run();

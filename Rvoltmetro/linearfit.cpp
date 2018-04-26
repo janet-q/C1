@@ -4,7 +4,8 @@
 #include <sstream>
 #include <cstring>
 #include <string>
-
+#include <cmath>
+#include <cstdlib>
 #include <TF1.h>
 #include <TGraphErrors.h>
 #include <TAxis.h>
@@ -17,6 +18,10 @@ using namespace std;
 
 //bisogna definre la funzione Req
 
+double Requivalente (double * x,double *par){
+    return (par[1]*par[0]/(par[0]-par[1]))*x[0];
+}
+
 int main(int argc, char** argv){
 
 //controllo che sia stato inserito il parametro
@@ -26,9 +31,13 @@ int main(int argc, char** argv){
     }
 
     TGraphErrors* myGraph = new TGraphErrors(argv[1]);
+    myGraph->GetXaxis()->SetTitle("A (A)");
+    myGraph->GetYaxis()->SetTitle("V (V)");
+    myGraph->SetMarkerStyle(20);
+    myGraph->SetMarkerSize(1);
 
     //DEFINISCO LA MIA FUNZIONE
-    TF1 *Req = new TF1("Req", Requiv, 0, 45e-6, 2);
+    TF1* Req = new TF1("Req", Requivalente, 0, 50e-5, 2);
     Req->SetParameter(0, 1.06679e+07);
     Req->SetParameter(1, 67957.87);
 
@@ -44,30 +53,28 @@ int main(int argc, char** argv){
     TCanvas* myCanvas = new TCanvas("Misura della resistenza equivalente", "Titolo",0,0,1500,1000);
 
     myCanvas->cd();
-    myGraph->GetXaxis()->SetTitle("A (A)");
-    myGraph->GetYaxis()->SetTitle("V (V)");
-    myGraph->SetMarkerStyle(20);
-    myGraph->SetMarkerSize(1);
+
 
     myGraph->Draw("AP");
-    myGraph->Fit("pol1");
+    myGraph->Fit("Req");
     myCanvas->Modified();
     myCanvas->Update();
 
-    myCanvas->Print();
+    myAPP->Run();
+    //myCanvas->Print();
 
 
 
     //risultati del fit
 
-    TF1 *fit = myGraph->GetFunction("pol1");
+    //TF1 *fit = myGraph->GetFunction("pol1");
 
     std::string fileOutput = argv[2];
     std::ofstream OutFile (fileOutput.c_str());
-    OutFile << fit->GetParameter(1) << "\t" << fit->GetParError(1);
+    OutFile << Req->GetParameter(0) << "\t" << Req->GetParError(0);
     OutFile.close();
 
-    myAPP->Run();
+   // myAPP->Run();
     return 0;
 
 }
